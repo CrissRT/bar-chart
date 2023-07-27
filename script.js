@@ -1,20 +1,20 @@
 
 let items;
 
-let height = 512;
-let width = 900;
+let height = 600;
+let width = 800;
 let padding = 40;
 
-let svg = d3.select('.visHolder').append('svg');
-    
+let svg = d3.select("#stat-container")
+            .append("svg");
 
 function drawCanvas() {
-  svg.attr('width', width + 100)
-  .attr('height', height + 60);
+  svg.attr("width", width)
+      .attr("height", height);
 }
 
 function generateScales() {
-  yScale = d3.scaleLinear()
+  heightScale = d3.scaleLinear()
                   .domain([0, d3.max(items, (d) => d[1])])
                   .range([0, height - 2 * padding]);
 
@@ -22,10 +22,12 @@ function generateScales() {
              .domain([0, items.length - 1])
              .range([padding, width - padding]);                 
                 
-  let datesArray = items.map((d) => new Date(d[0]));
+  let datesArray = items.map((d) =>
+    new Date(d[0])
+  );           
 
   xAxisScale = d3.scaleTime()
-                 .domain(d3.extent(datesArray))
+                 .domain([0, d3.max(datesArray)])
                  .range([padding, width - padding]);
                  
   yAxisScale = d3.scaleLinear()
@@ -33,23 +35,15 @@ function generateScales() {
                  .range([height - padding, padding]);                 
 }
 
-
 function generateAxes() {
   let xAxis = d3.axisBottom(xAxisScale);
 
   svg.append("g")
-     .attr("transform", "translate(0," + (height - padding) + ")")
      .call(xAxis)
      .attr("id", "x-axis");
 
-  // let yAxis = d3.axisLeft(yAxisScale);
-
-  // svg.append("g")
-  //    .attr("transform", "translate(" + padding + ", 0)")
-  //    .call(yAxis)
-  //    .attr("id", "y-axis");
+  // let yAxis = d3.axisBottom(yAxisScale);
 }
-
 
 d3.json('https://raw.githubusercontent.com/FreeCodeCamp/ProjectReferenceData/master/GDP-data.json')
   .then(data => {
