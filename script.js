@@ -91,11 +91,11 @@ function generateBars() {
           tooltip.transition()
                 .style("visibility", "visible");
           
-          if(index < items.length / 2)
+          if(index < items.length / 1.5)
           {
             tooltip.style("left", (event.pageX - 80) + "px").style("top", (event.pageY - 100) + "px");
           } else {
-            tooltip.style("left", (event.pageX - 250) + "px").style("top", (event.pageY) + "px");
+            tooltip.style("left", (event.pageX - 350) + "px").style("top", (event.pageY -50) + "px");
           }
         
           tooltip.text(stringText);
