@@ -51,6 +51,7 @@ footer {
   height: 10%;
 }
 
-a i {
+a{
   color: black;
+  overflow: hidden;
 }
