@@ -1,7 +1,7 @@
 
 let items;
 
-let height = 600;
+let height = 500;
 let width = 1000;
 let padding = 40;
 
@@ -66,17 +66,20 @@ function generateBars() {
                   .attr("id", "tooltip")
                   .style("visibility", "hidden")
 
+  const widthOfBar = (width - (2 * padding)) / items.length;
+
   svg.selectAll("rect")
      .data(items)
      .enter()
      .append("rect")
      .attr("class", "bar")
-     .attr("width", `${(width - (2 * padding)) / items.length}`)
+     .attr("width", `${widthOfBar}`)
      .attr("data-date", item => item[0])
      .attr("data-gdp", item => item[1])
      .attr("x", (item, index) => xScale(index))
      .attr("y", (item) => (height - padding) - heightScale(item[1]))
      .on("mouseover", function(event, d) {
+        const index = d3.select(this.parentNode).selectAll("rect").nodes().indexOf(this); // Get the index of the current rect
         const datesArray = parseInt(d[0]);
         const textarea = `$${Math.round(d[1])} Billions`
         const stringText = textarea +  " Y" + datesArray;
@@ -88,7 +91,12 @@ function generateBars() {
           tooltip.transition()
                 .style("visibility", "visible");
           
-          tooltip.style("left", (event.pageX - 100) + "px").style("top", (event.pageY - 100) + "px");
+          if(index < items.length / 2)
+          {
+            tooltip.style("left", (event.pageX - 80) + "px").style("top", (event.pageY - 100) + "px");
+          } else {
+            tooltip.style("left", (event.pageX - 250) + "px").style("top", (event.pageY) + "px");
+          }
         
           tooltip.text(stringText);
         
@@ -102,7 +110,6 @@ function generateBars() {
       })      
      .attr("height", (item) => heightScale(item[1]));
 }
-
 
 d3.json('https://raw.githubusercontent.com/FreeCodeCamp/ProjectReferenceData/master/GDP-data.json')
   .then(data => {

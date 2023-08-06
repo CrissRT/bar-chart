@@ -22,10 +22,8 @@ body {
   width: 80%;
   position: absolute;
   height: 90%;
-  overflow: hidden;
   box-shadow: 1px 1px 10px;
   border-radius: 2px;
-  pointer-events: none;
 }
 
 #tooltip{
@@ -51,10 +49,10 @@ footer {
   height: 10%;
 }
 
-a{
-  overflow: hidden;
-}
-
 a i {
   color: black;
+}
+
+a {
+  overflow: hidden;
 }
