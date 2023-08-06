@@ -21,8 +21,11 @@ body {
   background-color:  #d8e2dc;
   width: 80%;
   position: absolute;
-  height: 80%;
+  height: 90%;
   overflow: hidden;
+  box-shadow: 1px 1px 10px;
+  border-radius: 2px;
+  pointer-events: none;
 }
 
 #tooltip{
