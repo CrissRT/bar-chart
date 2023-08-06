@@ -6,10 +6,10 @@ let width = 1000;
 let padding = 40;
 
 let svg = d3.select("#stat-container")
-  .append("svg")
-  .attr("preserveAspectRatio", "xMinYMin meet")
-  .attr("viewBox", `0 0 ${width} ${height}`)
-  .classed("svg-content-responsive", true);
+            .append("svg")
+            .attr("preserveAspectRatio", "xMinYMin meet")
+            .attr("viewBox", `0 0 ${width} ${height}`)
+            .classed("svg-content-responsive", true);
 
 
 function drawCanvas() {
@@ -28,20 +28,20 @@ function drawCanvas() {
                       .range([0, height - 2 * padding]);
 
       xScale = d3.scaleLinear()
-                .domain([0, items.length - 1])
-                .range([padding, width - padding]);                 
+                 .domain([0, items.length - 1])
+                 .range([padding, width - padding]);                 
                     
       let datesArray = items.map((d) =>
         new Date(d[0])
       );           
 
       xAxisScale = d3.scaleTime()
-                    .domain([d3.min(datesArray ), d3.max(datesArray)])
-                    .range([padding, width - padding]);
+                     .domain([d3.min(datesArray ), d3.max(datesArray)])
+                     .range([padding, width - padding]);
                     
       yAxisScale = d3.scaleLinear()
-                    .domain([0, d3.max(items, (d) => d[1])])
-                    .range([height - padding, padding]);                 
+                     .domain([0, d3.max(items, (d) => d[1])])
+                     .range([height - padding, padding]);                 
     }
 
 function generateAxes() {
@@ -77,32 +77,28 @@ function generateBars() {
      .attr("x", (item, index) => xScale(index))
      .attr("y", (item) => (height - padding) - heightScale(item[1]))
      .on("mouseover", function(event, d) {
-      console.log(d)
-      const datesArray = parseInt(d[0]);
+        const datesArray = parseInt(d[0]);
+        const textarea = `$${Math.round(d[1])} Billions`
+        const stringText = textarea +  " Y" + datesArray;
 
-      const textarea = `$${Math.round(d[1])} Billions`
-
-      const stringText = textarea +  " Y" + datesArray;
-
-      svg.select(`rect[data-date='${d[0]}']`).style("fill", "white")
-      
-        const item = d3.select(this).datum();
-      
-        tooltip.transition()
-              .style("visibility", "visible");
+        svg.select(`rect[data-date='${d[0]}']`).style("fill", "white")
         
-        tooltip.style("left", (event.pageX - 100) + "px").style("top", (event.pageY - 100) + "px");
-      
-        tooltip.text(stringText);
-      
-        document.querySelector("#tooltip").setAttribute("data-date", item[0]);
-        // console.log(item[0]);
+          const item = d3.select(this).datum();
+        
+          tooltip.transition()
+                .style("visibility", "visible");
+          
+          tooltip.style("left", (event.pageX - 100) + "px").style("top", (event.pageY - 100) + "px");
+        
+          tooltip.text(stringText);
+        
+          document.querySelector("#tooltip").setAttribute("data-date", item[0]);
       })   
       .on("mouseout", (event, d) => {
         svg.select(`rect[data-date='${d[0]}']`)
-            .style("fill", "black")
+           .style("fill", "black")
           tooltip.transition()
-          .style("visibility", "hidden");
+                 .style("visibility", "hidden");
       })      
      .attr("height", (item) => heightScale(item[1]));
 }
@@ -115,5 +111,4 @@ d3.json('https://raw.githubusercontent.com/FreeCodeCamp/ProjectReferenceData/mas
     generateScales();
     generateAxes();
     generateBars();
-    // console.log(items);
   })
