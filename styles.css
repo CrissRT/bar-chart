@@ -52,6 +52,9 @@ footer {
 }
 
 a{
-  color: black;
   overflow: hidden;
+}
+
+a i {
+  color: black;
 }
